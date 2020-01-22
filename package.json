@@ -1,0 +1,31 @@
+{
+  "name": "impinj-reader-provisioner",
+  "version": "1.0.0",
+  "description": "Provisions Impinj readers with an ItemSense instance.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rledford/impinj-reader-provisioner.git"
+  },
+  "keywords": [
+    "impinj",
+    "reader",
+    "provision",
+    "itemsense",
+    "rfid"
+  ],
+  "author": "rledford",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rledford/impinj-reader-provisioner/issues"
+  },
+  "homepage": "https://github.com/rledford/impinj-reader-provisioner#readme",
+  "dependencies": {
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5",
+    "yargs": "^15.1.0"
+  }
+}

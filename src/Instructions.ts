@@ -1,16 +1,25 @@
-const fs = require('fs');
+import fs from 'fs';
+import { ReaderDefinition } from './types/ReaderDefinition';
 
-class Instructions {
-  constructor() {
-    this.readerNameList = [];
-    this.readerIpList = [];
-    this.readers = [];
-    this.readerAgentToken = null;
-    this.itemsenseHost = null;
-    this.itemsenseCap = null;
-    this.itemsenseCert = null;
-  }
+export default class Instructions {
+  public readerNameList: string[] = [];
+  public readerIpList: string[] = [];
+  public readers: ReaderDefinition[] = [];
+  public readerAgentToken?: string;
+  public itemsenseHost?: string;
+  public itemsenseCap?: string;
+  public itemsenseCert?: string;
 
+  /**
+   * Creates a new Instructions object
+   */
+  constructor() {}
+
+  /**
+   * Loads the provision instructions from a file
+   *
+   * @param {String} path The path to an instructions file
+   */
   load(path) {
     const f = fs.readFileSync(path, 'utf8');
     const lines = f.split('\n');
@@ -63,24 +72,24 @@ class Instructions {
           if (!fs.existsSync(v)) {
             throw new Error(`ItemSense sever certificate not found`);
           }
-          this.itemsenseCert = fs.readFileSync(v);
+          this.itemsenseCert = fs.readFileSync(v).toString('base64');
           break;
       }
-    }
-    if (
-      !this.itemsenseHost ||
-      !this.itemsenseCap ||
-      !this.itemsenseCert ||
-      !this.readerAgentToken
-    ) {
-      throw new Error(
-        `Missing ItemSense server host, cap file, cert, or ReaderAgent token`
-      );
     }
     if (this.readers.length === 0) {
       throw new Error(`No reader definitions found`);
     }
+    if (!this.itemsenseHost) {
+      throw new Error('Missing ItemSense host');
+    }
+    if (!this.itemsenseCap) {
+      throw new Error('Missing ItemSense cap file');
+    }
+    if (!this.itemsenseCert) {
+      throw new Error('Missing ItemSense server certificate');
+    }
+    if (!this.readerAgentToken) {
+      throw new Error('Missing ReaderAgent token');
+    }
   }
 }
-
-module.exports = Instructions;

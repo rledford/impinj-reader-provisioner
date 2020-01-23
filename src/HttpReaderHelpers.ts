@@ -1,9 +1,13 @@
-const rp = require('request-promise');
-const fs = require('fs');
+import rp from 'request-promise';
+import fs from 'fs';
 
 const READER_API_URL = '/cgi-bin/index.cgi';
 
-async function restartReader(host, username = 'root', password = 'impinj') {
+function restartReader(
+  host: string,
+  username: string = 'root',
+  password: string = 'impinj'
+): rp.RequestPromise {
   const url = `http://${host}${READER_API_URL}`;
   return rp.post(url, {
     form: {
@@ -17,9 +21,14 @@ async function restartReader(host, username = 'root', password = 'impinj') {
   });
 }
 
-async function uploadUpg(host, path, username = 'root', password = 'impinj') {
+function uploadUpg(
+  host: string,
+  path: string,
+  username: string = 'root',
+  password: string = 'impinj'
+): rp.RequestPromise {
   const url = `http://${host}${READER_API_URL}`;
-  let upg;
+  let upg: fs.ReadStream;
 
   try {
     upg = fs.createReadStream(path);
@@ -41,16 +50,15 @@ async function uploadUpg(host, path, username = 'root', password = 'impinj') {
   }
 }
 
-async function provisionReader(
-  host,
-  readerName,
-  readerAgentToken,
-  itemsenseHost,
-  itemsenseCert
-) {
+function provisionReader(
+  host: string,
+  readerName: string,
+  readerAgentToken: string,
+  itemsenseHost: string,
+  itemsenseCert: string
+): rp.RequestPromise {
   const url = `https://${host}:51505/provision`;
   const itemsenseUrl = `https://${itemsenseHost}/itemsense`;
-  const cert = itemsenseCert.toString('base64');
   return rp.post(url, {
     followRedirect: false,
     headers: {
@@ -61,13 +69,9 @@ async function provisionReader(
       BaseUrl: itemsenseUrl,
       AgentId: readerName,
       ApiKey: readerAgentToken,
-      ServerCertificate: cert
+      ServerCertificate: itemsenseCert
     }
   });
 }
 
-module.exports = {
-  restartReader,
-  uploadUpg,
-  provisionReader
-};
+export { restartReader, uploadUpg, provisionReader };

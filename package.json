@@ -2,10 +2,16 @@
   "name": "impinj-reader-provisioner",
   "version": "1.0.0",
   "description": "Provisions Impinj readers with an ItemSense instance.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "node ./util/clean",
+    "build": "npm run clean && tsc"
   },
+  "files": [
+    "/dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rledford/impinj-reader-provisioner.git"
@@ -27,5 +33,13 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
     "yargs": "^15.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.1.8",
+    "@types/request": "^2.48.4",
+    "@types/request-promise": "^4.1.45",
+    "@types/yargs": "^15.0.1",
+    "tslint": "^6.0.0",
+    "typescript": "^3.7.5"
   }
 }

@@ -1,6 +1,6 @@
 # impinj-reader-provisioner
 
-Provisions one or more readers for a single ItemSense instance. This application will provision 5 readers at a time and takes approximately 3-5 minutes to complete each batch.
+Provisions one or more readers for a single ItemSense instance. This application will provision multiple readers at a time and takes approximately 2-3 minutes to complete each batch.
 
 ## Table of Contents
 
@@ -65,12 +65,13 @@ See [pkg](https://www.npmjs.com/package/pkg) documentation for more build option
 
 The instruction file should include the following:
 
-| Key            | Example                   | Description                                                                                                                                                  |
-| -------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| ITEMSENSE_HOST | 192.168.1.100             | The hostname or IP address of the ItemSense server (whichever one the readers need to use to communicate with the server)                                    |
-| ITEMSENSE_CAP  | /path/to/cap/file.cap     | The path to the ItemSense ii-cap-x.x.x.xxx-xxx.upg file                                                                                                      |
-| ITEMSENSE_CERT | /path/to/cert/file.pem    | The path to an ItemSense server SSL certificate file in PEM format                                                                                           |
-| READER         | name,IP,username,password | Multiple READER entries may exist in the file. Only the name and IP are required if the reader's username and password are left as the default `root:impinj` |
+| Key               | Example                   | Description                                                                                                                                                   |
+| ----------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ITEMSENSE_HOST    | 192.168.1.100             | The hostname or IP address of the ItemSense server (whichever one the readers need to use to communicate with the server).                                    |
+| ITEMSENSE_CAP     | /path/to/cap/file.cap     | The path to the ItemSense ii-cap-x.x.x.xxx-xxx.upg file.                                                                                                      |
+| ITEMSENSE_CERT    | /path/to/cert/file.pem    | The path to an ItemSense server SSL certificate file in PEM format.                                                                                           |
+| READER            | name,IP,username,password | Multiple READER entries may exist in the file. Only the name and IP are required if the reader's username and password are left as the default `root:impinj`. |
+| READER_BATCH_SIZE | 5                         | The number of readers to provision at the same time. This does not need to be equal to the number of readers in the instruction file. Defaults to 5.          |
 
 Example Instruction File
 

@@ -94,6 +94,8 @@ READER=SpeedwayR-99-99-17,192.168.1.17,username,password
 READER=SpeedwayR-99-99-18,192.168.1.18
 ```
 
+_NOTE_: The order of the instructions in the file does not matter.
+
 ## Obtaining ItemSense Requirements
 
 ### Cap File

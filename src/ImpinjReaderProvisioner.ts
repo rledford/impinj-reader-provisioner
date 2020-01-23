@@ -2,7 +2,6 @@ import { EventEmitter } from 'events';
 import Instructions from './Instructions';
 import * as HttpReaderHelpers from './HttpReaderHelpers';
 import { ReaderDefinition } from './types/ReaderDefinition';
-import { read } from 'fs';
 
 /**
  * Manages the provisioning of multiple readers and emits events

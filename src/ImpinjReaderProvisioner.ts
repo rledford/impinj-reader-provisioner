@@ -3,7 +3,8 @@ import Instructions from './Instructions';
 import * as HttpReaderHelpers from './HttpReaderHelpers';
 import { ReaderDefinition } from './types/ReaderDefinition';
 
-const READER_BATCH_SIZE = 5;
+const READER_UPG_COMMIT_WAIT_TIME = 30000;
+const READER_RESTART_WAIT_TIME = 90000;
 
 async function wait(time: number) {
   return new Promise(resolve => {
@@ -27,21 +28,25 @@ export default class ImpinjReaderProvisioner extends EventEmitter {
 
   async provisionReaders() {
     let batch: ReaderDefinition[] = [];
+    let batchCount = 0;
+    let succeedCount = 0;
+    let startTime = Date.now();
     for (let i = 0; i < this.instructions.readers.length; i++) {
       if (batch.length === 0) {
-        console.log('building reader batch...');
+        batchCount++;
+        console.log(`Building reader batch [ ${batchCount} ]`);
       }
       batch.push(this.instructions.readers[i]);
       if (i !== this.instructions.readers.length - 1) {
-        if (batch.length < READER_BATCH_SIZE) {
+        if (batch.length < this.instructions.readerBatchSize) {
           continue;
         }
       }
-      console.log('provisioning reader batch...');
+      console.log(`Provisioning readers in batch [ ${batchCount} ]`);
       await Promise.all(
         batch.map(reader => {
           return new Promise(resolve => {
-            console.log(`uploading upg file to ${reader.ip}`);
+            console.log(`Uploading CAP file to [ ${reader.ip} ]`);
             HttpReaderHelpers.uploadUpg(
               reader.ip,
               this.instructions.itemsenseCap,
@@ -49,11 +54,13 @@ export default class ImpinjReaderProvisioner extends EventEmitter {
               reader.password
             )
               .then(() => {
-                console.log(`upg upload to ${reader.ip} complete`);
+                console.log(`CAP file uploaded to [ ${reader.ip} ]`);
                 resolve();
               })
               .catch(err => {
-                console.log(`error uploading upg to ${reader.ip}: ${err}`);
+                console.log(
+                  `Error uploading CAP to [ ${reader.ip} ] - ${err.message}`
+                );
                 //  remove the reader from the batch
                 batch.splice(batch.indexOf(reader), 1);
                 resolve();
@@ -61,14 +68,18 @@ export default class ImpinjReaderProvisioner extends EventEmitter {
           });
         })
       );
-      console.log('remaining in batch', batch.length);
       if (batch.length === 0) {
-        console.log('upg upload failed for all readers');
+        console.log(
+          `CAP file upload failed for all readers in batch [ ${batchCount} ]`
+        );
         continue;
       }
-      // wait 30 seconds
-      console.log('waiting 30 seconds for upg commit...');
-      await wait(30000);
+      // wait for CAP commit to complete
+      console.log(
+        `Waiting ${READER_UPG_COMMIT_WAIT_TIME /
+          1000} seconds for CAP to commit`
+      );
+      await wait(READER_UPG_COMMIT_WAIT_TIME);
       await Promise.all(
         batch.map(reader => {
           return new Promise(resolve => {
@@ -78,19 +89,24 @@ export default class ImpinjReaderProvisioner extends EventEmitter {
               reader.password
             )
               .then(() => {
-                console.log(`restarting reader ${reader.ip}`);
+                console.log(`Restarting reader [ ${reader.ip} ]`);
                 resolve();
               })
               .catch(err => {
-                console.log(`error restarting reader ${reader.ip}: ${err}`);
+                console.log(
+                  `Error restarting reader [ ${reader.ip} ] - ${err.message}`
+                );
                 resolve();
               });
           });
         })
       );
-      console.log('waiting 90 seconds for readers to fully reboot...');
-      // wait 90 seconds
-      await wait(90000);
+      console.log(
+        `Waiting ${READER_RESTART_WAIT_TIME /
+          1000} seconds for readers to fully reboot`
+      );
+      // wait for reader to restart
+      await wait(READER_RESTART_WAIT_TIME);
       await Promise.all(
         batch.map(reader => {
           return new Promise(resolve => {
@@ -102,18 +118,29 @@ export default class ImpinjReaderProvisioner extends EventEmitter {
               this.instructions.itemsenseCert
             )
               .then(() => {
-                console.log(`reader ${reader.ip} provisioned successfully`);
+                console.log(`Reader [ ${reader.ip} ] provisioned successfully`);
+                succeedCount++;
                 resolve();
               })
               .catch(err => {
-                console.log(`error provisioning reader ${reader.ip}: ${err}`);
+                console.log(
+                  `Error provisioning reader [ ${reader.ip} ] - ${err.message}`
+                );
                 resolve();
               });
           });
         })
       );
-      console.log(`reader batch complete`);
+      console.log(`Reader batch [ ${batchCount} ] complete`);
       batch = [];
     }
+    console.log('     REPORT     ');
+    console.log('****************');
+    console.log(`DURATION: ${Math.round((Date.now() - startTime) / 1000)}s`);
+    console.log(`READERS: ${this.instructions.readers.length}`);
+    console.log(`BATCHES: ${batchCount}`);
+    console.log(`SUCCEEDED: ${succeedCount}`);
+    console.log(`FAILED: ${this.instructions.readers.length - succeedCount}`);
+    console.log('****************');
   }
 }

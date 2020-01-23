@@ -6,9 +6,9 @@ Provisions one or more readers for a single ItemSense instance. This application
 
 - [Requirements](#requirements)
 - [Usage](#usage)
+- [Build Executable](#build-executable)
 - [Command Line Options](#command-line-options)
 - [Instruction File](#instruction-file)
-- [Build Executable](#build-executable)
 - [Obtaining ItemSense Requirements](#obtaining-requirements)
 
 ## Requirements
@@ -30,6 +30,30 @@ npm i
 npm run build
 node ./dist -i path-to-instruction-file
 ```
+
+## Build Executables
+
+### Windows Example
+
+Assuming NodeJS 8.x is being used.
+
+Install [pkg](https://www.npmjs.com/package/pkg) package globally.
+
+```bash
+npm i -g pkg
+```
+
+Download source, build, and package into executable.
+
+```bash
+git clone https://github.com/rledford/impinj-reader-provisioner
+cd ./impinj-reader-provisioner
+npm i
+npm run build
+pkg .\dist\index.js -t node8-win -o C:\Users\username\Desktop\impinj-reader-provisioner.exe
+```
+
+See [pkg](https://www.npmjs.com/package/pkg) documentation for more build options.
 
 ## Command Line Options
 

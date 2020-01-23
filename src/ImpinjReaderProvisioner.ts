@@ -59,7 +59,7 @@ export default class ImpinjReaderProvisioner extends EventEmitter {
               })
               .catch(err => {
                 console.log(
-                  `Error uploading CAP to [ ${reader.ip} ] - ${err.message}`
+                  `Error uploading CAP file to [ ${reader.ip} ] - ${err.message}`
                 );
                 //  remove the reader from the batch
                 batch.splice(batch.indexOf(reader), 1);

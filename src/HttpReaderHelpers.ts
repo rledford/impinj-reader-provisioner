@@ -28,26 +28,16 @@ function uploadUpg(
   password: string = 'impinj'
 ): rp.RequestPromise {
   const url = `http://${host}${READER_API_URL}`;
-  let upg: fs.ReadStream;
 
-  try {
-    upg = fs.createReadStream(path);
-    console.log('created upg file stream');
-  } catch (err) {
-    console.log('invalid upg file path');
-  }
-
-  if (upg) {
-    return rp.post(url, {
-      formData: {
-        file: upg
-      },
-      auth: {
-        username,
-        password
-      }
-    });
-  }
+  return rp.post(url, {
+    formData: {
+      file: fs.createReadStream(path)
+    },
+    auth: {
+      username,
+      password
+    }
+  });
 }
 
 function provisionReader(
@@ -59,8 +49,10 @@ function provisionReader(
 ): rp.RequestPromise {
   const url = `https://${host}:51505/provision`;
   const itemsenseUrl = `https://${itemsenseHost}/itemsense`;
+
   return rp.post(url, {
     followRedirect: false,
+    strictSSL: false,
     headers: {
       Accept: 'application/json'
     },

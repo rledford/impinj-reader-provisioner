@@ -1,5 +1,7 @@
 import yargs from 'yargs';
 import Instructions from './Instructions';
+import ImpinjReaderProvisioner from './ImpinjReaderProvisioner';
+import * as HttpReaderHelpers from './HttpReaderHelpers';
 
 const argv = yargs.option('ifile', {
   alias: 'i',
@@ -15,4 +17,5 @@ try {
   process.exit(1);
 }
 
-async function start() {}
+const irp = new ImpinjReaderProvisioner(instructions);
+irp.provisionReaders();

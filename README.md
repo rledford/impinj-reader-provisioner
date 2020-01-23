@@ -66,14 +66,14 @@ See [pkg](https://www.npmjs.com/package/pkg) documentation for more build option
 
 The instruction file should include the following:
 
-| Key                | Example                              | Description                                                                                                                                                   |
-| ------------------ | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ITEMSENSE_HOST     | 192.168.1.100                        | The hostname or IP address of the ItemSense server (whichever one the readers need to use to communicate with the server).                                    |
-| ITEMSENSE_CAP      | /path/to/cap/file.cap                | The path to the ItemSense ii-cap-x.x.x.xxx-xxx.upg file.                                                                                                      |
-| ITEMSENSE_CERT     | /path/to/cert/file.pem               | The path to an ItemSense server SSL certificate file in PEM format.                                                                                           |
-| READER_AGENT_TOKEN | 6fc52ba8-a2b7-44cb-b779-255064610d5f | The token the readers should use to autheticate with the ItemSense server                                                                                     |
-| READER_BATCH_SIZE  | 5                                    | The number of readers to provision at the same time. This does not need to be equal to the number of readers in the instruction file. Defaults to 5.          |
-| READER             | name,192.168.1.10,username,pw        | Multiple READER entries may exist in the file. Only the name and IP are required if the reader's username and password are left as the default `root:impinj`. |
+| Key                | Example                              | Description                                                                                                                                                                                                                                           |
+| ------------------ | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ITEMSENSE_HOST     | 192.168.1.100                        | The hostname or IP address of the ItemSense server (whichever one the readers need to use to communicate with the server).                                                                                                                            |
+| ITEMSENSE_CAP      | /path/to/cap/file.cap                | The path to the ItemSense ii-cap-x.x.x.xxx-xxx.upg file.                                                                                                                                                                                              |
+| ITEMSENSE_CERT     | /path/to/cert/file.pem               | The path to an ItemSense server SSL certificate file in PEM format.                                                                                                                                                                                   |
+| READER_AGENT_TOKEN | 6fc52ba8-a2b7-44cb-b779-255064610d5f | The token the readers should use to autheticate with the ItemSense server                                                                                                                                                                             |
+| READER_BATCH_SIZE  | 5                                    | The number of readers to provision at the same time. This does not need to be equal to the number of readers in the instruction file. Defaults to 5.                                                                                                  |
+| READER             | name,ip,username,password            | Comma separated values for a reader's name, IP address, username, and password. Only the name and IP address are required unless the reader's username and password are not the default `root:impinj`. Multiple READER entries may exist in the file. |
 
 Example Instruction File
 
@@ -83,15 +83,15 @@ ITEMSENSE_CAP=/path/to/ii-cap-x.x.x.xxx-xxx.upg
 ITEMSENSE_CERT=/path/to/itemsense-cert.pem
 READER_AGENT_TOKEN=6fc52ba8-a2b7-44cb-b779-255064610d5f
 READER_BATCH_SIZE=10
-READER=SpeedwayR-99-99-10,192.168.1.10
-READER=SpeedwayR-99-99-11,192.168.1.11,notroot,notimpinj
-READER=SpeedwayR-99-99-12,192.168.1.12
-READER=SpeedwayR-99-99-13,192.168.1.13
-READER=SpeedwayR-99-99-14,192.168.1.14,notroot,notimpinj
-READER=SpeedwayR-99-99-15,192.168.1.15
-READER=SpeedwayR-99-99-16,192.168.1.16
-READER=SpeedwayR-99-99-17,192.168.1.17,username,password
-READER=SpeedwayR-99-99-18,192.168.1.18
+READER=SpeedwayR-FF-FF-10,192.168.1.10
+READER=SpeedwayR-FF-FF-11,192.168.1.11,notroot,notimpinj
+READER=SpeedwayR-FF-FF-12,192.168.1.12
+READER=SpeedwayR-FF-FF-13,192.168.1.13
+READER=SpeedwayR-FF-FF-14,192.168.1.14,notroot,notimpinj
+READER=SpeedwayR-FF-FF-15,192.168.1.15
+READER=SpeedwayR-FF-FF-16,192.168.1.16
+READER=SpeedwayR-FF-FF-17,192.168.1.17,username,password
+READER=SpeedwayR-FF-FF-18,192.168.1.18
 ```
 
 _NOTE_: The order of the instructions in the file does not matter.

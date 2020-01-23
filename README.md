@@ -110,19 +110,19 @@ Transfer the cap file to the machine that will run this tool to provision the re
 
 ### ReaderAgent Token
 
-_IMPORTANT_: If the ItemSense server has never automatically provisioned at least one reader, it is likely that the _ReaderAgent_ user does not exist.
+_IMPORTANT_: If the ItemSense server has never provisioned at least one reader automatically, it is likely that the _ReaderAgent_ user does not exist.
 
-Access the ItemSense Swagger web interface for the following actions.
+Access the ItemSense Swagger web interface to perform the next steps.
 
-URL
+ItemSense Swagger URL
 
 _http://itemsense-base-url/swagger_
 
 Example
 
-_http://192.168.1.100/itemsense/swagger_
+_http://192.168.1.100:80/itemsense/swagger_
 
-_NOTE_: When prompted to enter a username and password, provide the `admin` user's credentials to ensure the actions execute with sufficient privileges.
+_NOTE_: When prompted to enter a username and password, while executing the step below, provide the `admin` user's credentials to ensure the actions execute with sufficient privileges.
 
 ---
 
@@ -136,7 +136,7 @@ Under _v1 Authentication_, expand the _GET /configuration/v1/users/show_ operati
 
 **Only If the Previous Step Did Not Return a ReaderAgent User**
 
-Under _v1 Authentication_,expand the _POST /configuration/v1/users/create_ operation and add the following to the body parameter (use a secure password):
+Under _v1 Authentication_, expand the _POST /configuration/v1/users/create_ operation and add the following to the body parameter (use a secure password):
 
 ```json
 {
@@ -182,6 +182,7 @@ openssl s_client -showcerts -connect itemsense-server-ip-or-hostname:443 </dev/n
 
 - Replace `itemsense-server-ip-or-hostname` with the server's IP address or hostname.
 - Replace `ItemSense.pem` with a desired file name. Something with a date, time, and the ItemSense version is usually helpful for tracking upgrades.
+- Copy the file to the machine that will be used to provision the readers.
 
 ### Reader Definitions
 

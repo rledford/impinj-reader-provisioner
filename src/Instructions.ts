@@ -2,6 +2,7 @@ import fs from 'fs';
 import { ReaderDefinition } from './types/ReaderDefinition';
 
 export default class Instructions {
+  public readerBatchSize: number = 5;
   public readerNameList: string[] = [];
   public readerIpList: string[] = [];
   public readers: ReaderDefinition[] = [];
@@ -30,6 +31,13 @@ export default class Instructions {
       if (kv.length !== 2) continue;
       const [k, v] = kv;
       switch (k.toUpperCase()) {
+        case 'READER_BATCH_SIZE':
+          let batchSize = parseInt(v);
+          if (isNaN(batchSize) || batchSize < 1) {
+            throw new Error(`Invalid reader batch size [ ${batchSize} ]`);
+          }
+          this.readerBatchSize = batchSize;
+          break;
         case 'READER':
           const [name, ip, username, password] = v.split(',');
           if (!name || !ip) {

@@ -75,6 +75,8 @@ The instruction file should include the following:
 | READER_BATCH_SIZE  | 5                                    | The number of readers to provision at the same time. This does not need to be equal to the number of readers in the instruction file. Defaults to 5.                                                                                                  |
 | READER             | name,ip,username,password            | Comma separated values for a reader's name, IP address, username, and password. Only the name and IP address are required unless the reader's username and password are not the default `root:impinj`. Multiple READER entries may exist in the file. |
 
+_NOTE_: Duplicate reader names and IP addresses are not allowed.
+
 Example Instruction File
 
 ```txt

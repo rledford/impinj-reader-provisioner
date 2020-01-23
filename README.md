@@ -18,6 +18,7 @@ Provisions one or more readers for a single ItemSense instance. This application
 - ItemSense ReaderAgent token
 - ItemSense server SSL certificate
 - Reader definitions created for all readers requiring provisioning
+- Readers must be able to communicate with the ItemSense server at the time of provisioning
 
 ## Usage
 

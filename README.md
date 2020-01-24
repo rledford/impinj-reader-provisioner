@@ -124,7 +124,7 @@ Example
 
 _http://192.168.1.100:80/itemsense/swagger_
 
-_NOTE_: When prompted to enter a username and password, while executing the step below, provide the `admin` user's credentials to ensure the actions execute with sufficient privileges.
+_NOTE_: When prompted to enter a username and password, while executing the steps below, provide the `admin` user's credentials to ensure the actions execute with sufficient privileges.
 
 ---
 
@@ -176,7 +176,7 @@ Under _v1 Authentication_, expand the _GET /authentication/v1/listTokens/{userna
 
 ### SSL Certificate
 
-Either directly access the servers command line or use SSH to run the following command:
+Either directly access the server's command line or use SSH to run the following command:
 
 ```bash
 openssl s_client -showcerts -connect itemsense-server-ip-or-hostname:443 </dev/null 2>/dev/null|openssl x509 -outform PEM >ItemSense.pem

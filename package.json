@@ -1,7 +1,7 @@
 {
   "name": "impinj-reader-provisioner",
   "version": "1.0.0",
-  "description": "Provisions Impinj readers with an ItemSense instance.",
+  "description": "Provisions one or more Impinj readers for a single ItemSense instance.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

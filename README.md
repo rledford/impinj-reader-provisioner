@@ -1,6 +1,6 @@
 # impinj-reader-provisioner
 
-Provisions one or more readers for a single ItemSense instance. This application will provision multiple readers at a time and takes approximately 2-3 minutes to complete each batch.
+Provisions one or more readers for a single ItemSense instance. Will provision multiple readers at a time and takes approximately 2-3 minutes to complete each batch.
 
 ## Table of Contents
 

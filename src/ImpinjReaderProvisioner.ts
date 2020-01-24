@@ -1,4 +1,3 @@
-import { EventEmitter } from 'events';
 import Instructions from './Instructions';
 import * as HttpReaderHelpers from './HttpReaderHelpers';
 import { ReaderDefinition } from './types/ReaderDefinition';
@@ -15,14 +14,13 @@ async function wait(time: number) {
 /**
  * Manages the provisioning of multiple readers and emits events
  */
-export default class ImpinjReaderProvisioner extends EventEmitter {
+export default class ImpinjReaderProvisioner {
   public instructions: Instructions;
   /**
    * Creates a new ImpinjReaderProvisioner
    * @param {Instructions} instructions An Instructions type object that contains the provisioning instructions
    */
   constructor(instructions: Instructions) {
-    super();
     this.instructions = instructions;
   }
 

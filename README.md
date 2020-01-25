@@ -64,9 +64,9 @@ See [pkg](https://www.npmjs.com/package/pkg) documentation for more build option
 
 ## Instruction File
 
-The instruction file should include the following:
+The instruction file uses key value pairs to define the provisioning instructions and should include the following:
 
-| Key                | Example                              | Description                                                                                                                                                                                                                                           |
+| Key                | Value Example                        | Description                                                                                                                                                                                                                                           |
 | ------------------ | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ITEMSENSE_HOST     | 192.168.1.100                        | The hostname or IP address of the ItemSense server (whichever one the readers need to use to communicate with the server).                                                                                                                            |
 | ITEMSENSE_CAP      | /path/to/cap/file.cap                | The path to the ItemSense ii-cap-x.x.x.xxx-xxx.upg file.                                                                                                                                                                                              |

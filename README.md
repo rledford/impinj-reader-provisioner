@@ -101,7 +101,7 @@ _NOTE_: The order of the instructions in the file does not matter.
 
 _NOTE_: Duplicate reader names and IP addresses are not allowed.
 
-_TIP_: If provisioning fails on some of the reader, use `#` to comment out the `READER`s that were successfully provisioned and rerun this tool with the same instruction file.
+_TIP_: If provisioning fails on some of the readers, use `#` to comment out the `READER`s that were successfully provisioned and rerun this tool with the same instruction file.
 
 ## Obtaining ItemSense Requirements
 

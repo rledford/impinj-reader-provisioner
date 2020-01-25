@@ -130,7 +130,7 @@ _NOTE_: When prompted to enter a username and password, while executing the step
 
 **STEP 1**
 
-Under _v1 Authentication_, expand the _GET /configuration/v1/users/show_ operation. Click the _Try it out!_ button. If the _ReaderAgent_ user is not in the list, then it will have to be created.
+Under _v1 Authentication_, expand the _GET /configuration/v1/users/show_ operation. Click the _Try it out!_ button. If the _ReaderAgent_ user is not in the list, then it will have to be created (see _Step 1.1_).
 
 ---
 

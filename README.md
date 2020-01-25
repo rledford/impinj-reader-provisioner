@@ -78,6 +78,8 @@ The instruction file uses key value pairs to define the provisioning instruction
 Example Instruction File
 
 ```txt
+# this is a comment
+# comments are ignored
 ITEMSENSE_HOST=192.168.1.100
 ITEMSENSE_CAP=/path/to/ii-cap-x.x.x.xxx-xxx.upg
 ITEMSENSE_CERT=/path/to/itemsense-cert.pem
@@ -92,11 +94,14 @@ READER=SpeedwayR-FF-FF-15,192.168.1.15
 READER=SpeedwayR-FF-FF-16,192.168.1.16
 READER=SpeedwayR-FF-FF-17,192.168.1.17,username,password
 READER=SpeedwayR-FF-FF-18,192.168.1.18
+# this is another comment
 ```
 
 _NOTE_: The order of the instructions in the file does not matter.
 
 _NOTE_: Duplicate reader names and IP addresses are not allowed.
+
+_TIP_: If provisioning fails on some of the reader, use `#` to comment out the `READER`s that were successfully provisioned and rerun this tool with the same instruction file.
 
 ## Obtaining ItemSense Requirements
 
@@ -193,3 +198,11 @@ Use the ItemSense Management Console to create reader definitions for the reader
 http://itemsense-ip:3010/readers/definitions
 
 _NOTE_: The reader name format should match exactly with `SpeedwayR-XX-XX-XX` where _XX-XX-XX_ is the last 3 segments of the reader's MAC address.
+
+## Additional Information
+
+- Sometimes readers take longer than 90 seconds to fully boot and ready themselves for HTTP connections so it's possible that after a successful CAP file upload and restart that the reader will fail to provision. You can comment out the readers that successfully provisioned in your instruction file and rerun this tool to attempt to provision the failed readers. You could also edit the source code and increase the wait time. The wait time constant can be found in the _ImpinjReaderProvision.ts_ file.
+
+```js
+const READER_RESTART_WAIT_TIME = 90000; // change this value if necessary (milliseconds)
+```

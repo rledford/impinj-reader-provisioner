@@ -1,5 +1,6 @@
 /tmp
 /node_modules
+**/*.DS_Store
 
 # https://github.com/github/gitignore/blob/master/Python.gitignore
 

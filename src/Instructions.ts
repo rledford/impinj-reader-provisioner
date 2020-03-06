@@ -10,6 +10,8 @@ export default class Instructions {
   public itemsenseHost?: string;
   public itemsenseCap?: string;
   public itemsenseCert?: string;
+  public force?: boolean = false;
+  public provision?: boolean = false;
 
   /**
    * Creates a new Instructions object

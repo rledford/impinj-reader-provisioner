@@ -3,6 +3,21 @@ import fs from 'fs';
 
 const READER_API_URL = '/cgi-bin/index.cgi';
 
+function checkAvailable(
+  readerIp: string,
+  username: string = 'root',
+  password: string = 'impinj'
+): rp.RequestPromise {
+  const url = `http://${readerIp}`;
+  return rp.get(url, {
+    timeout: 5000,
+    auth: {
+      username,
+      password
+    }
+  });
+}
+
 function restartReader(
   readerIp: string,
   username: string = 'root',
@@ -69,4 +84,4 @@ function provisionReader(
   });
 }
 
-export { restartReader, uploadUpg, provisionReader };
+export { checkAvailable, restartReader, uploadUpg, provisionReader };

@@ -17,5 +17,11 @@ try {
   process.exit(1);
 }
 
+if (argv.p) {
+  instructions.provision = true;
+}
+if (argv.f) {
+  instructions.force = true;
+}
 const irp = new ImpinjReaderProvisioner(instructions);
 irp.provisionReaders();

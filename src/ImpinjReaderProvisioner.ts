@@ -2,8 +2,9 @@ import Instructions from './Instructions';
 import * as HttpReaderHelpers from './HttpReaderHelpers';
 import { ReaderDefinition } from './types/ReaderDefinition';
 
-const READER_UPG_COMMIT_WAIT_TIME = 30000;
+const READER_UPG_COMMIT_WAIT_TIME = 45000;
 const READER_RESTART_WAIT_TIME = 90000;
+const READER_RESTART_ADDITIONAL_WAIT_TIME = 30000;
 
 async function wait(time: number) {
   return new Promise(resolve => {
@@ -24,11 +25,63 @@ export default class ImpinjReaderProvisioner {
     this.instructions = instructions;
   }
 
+  async readersAvailable(readers: ReaderDefinition[] = []) {
+    let availableCount = 0;
+    console.log(
+      `Confirming [ ${readers.length} ] reader${
+        readers.length > 1 ? 's are' : ' is'
+      } available`
+    );
+    await Promise.all(
+      readers.map(reader => {
+        return new Promise(resolve => {
+          HttpReaderHelpers.checkAvailable(
+            reader.ip,
+            reader.username,
+            reader.password
+          )
+            .then(() => {
+              availableCount++;
+              resolve();
+            })
+            .catch(err => {
+              console.log(
+                `Reader [ ${reader.name} ] not available at [ ${reader.ip} ]`
+              );
+              resolve();
+            });
+        });
+      })
+    );
+
+    console.log(
+      `Confirmed [ ${availableCount} ] reader${
+        availableCount > 1 || availableCount == 0 ? 's are' : ' is'
+      } available`
+    );
+
+    return availableCount === readers.length;
+  }
+
   async provisionReaders() {
     let batch: ReaderDefinition[] = [];
     let batchCount = 0;
     let succeedCount = 0;
     let startTime = Date.now();
+    if (!(await this.readersAvailable(this.instructions.readers))) {
+      if (!this.instructions.force) {
+        console.log(
+          'Use -f command line argument to proceed with unavailable readers'
+        );
+        await wait(100);
+        process.exit(0);
+      }
+    }
+    if (!this.instructions.provision) {
+      console.log('Use -p command line argument to proceed with provisioning');
+      await wait(100);
+      process.exit(0);
+    }
     for (let i = 0; i < this.instructions.readers.length; i++) {
       if (batch.length === 0) {
         batchCount++;
@@ -105,6 +158,15 @@ export default class ImpinjReaderProvisioner {
       );
       // wait for reader to restart
       await wait(READER_RESTART_WAIT_TIME);
+      // verify all readers are available
+      if (!(await this.readersAvailable(batch))) {
+        console.log(
+          `Not all readers available - waiting an additional ${READER_RESTART_ADDITIONAL_WAIT_TIME /
+            1000} seconds before proceeding`
+        );
+        await wait(READER_RESTART_ADDITIONAL_WAIT_TIME);
+      }
+      // provision available readers
       await Promise.all(
         batch.map(reader => {
           return new Promise(resolve => {

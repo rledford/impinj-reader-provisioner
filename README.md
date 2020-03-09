@@ -29,7 +29,15 @@ git clone https://github.com/rledford/impinj-reader-provisioner
 cd ./impinj-reader-provisioner
 npm i
 npm run build
-node ./dist -i path-to-instruction-file
+
+# run the application and check if all readers are available
+node ./dist -i /path/to/instruction/file
+
+# run the application and provision the readers if all readers are available
+nodde ./dist -i /path/to/instruction/file -p
+
+# run the applicaiton and force provisioning even if one or more readers is not available
+node ./dist -i /path/to/instruction/file -f -p
 ```
 
 ## Build Executables

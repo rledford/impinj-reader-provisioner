@@ -66,9 +66,11 @@ See [pkg](https://www.npmjs.com/package/pkg) documentation for more build option
 
 ## Command Line Options
 
-| Option  | Alias | Description                                |
-| ------- | ----- | ------------------------------------------ |
-| --ifile | -i    | The path to an instruction file (required) |
+| Option | Description                                                                           |
+| ------ | ------------------------------------------------------------------------------------- |
+| -i     | The path to an instruction file (required)                                            |
+| -f     | Force provisioning when one or more readers in the instructino file are not available |
+| -p     | Provision the readers in the instruction file                                         |
 
 ## Instruction File
 

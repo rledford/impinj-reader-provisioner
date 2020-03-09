@@ -69,7 +69,7 @@ See [pkg](https://www.npmjs.com/package/pkg) documentation for more build option
 | Option | Description                                                                           |
 | ------ | ------------------------------------------------------------------------------------- |
 | -i     | The path to an instruction file (required)                                            |
-| -f     | Force provisioning when one or more readers in the instructino file are not available |
+| -f     | Force provisioning when one or more readers in the instruction file are not available |
 | -p     | Provision the readers in the instruction file                                         |
 
 ## Instruction File
